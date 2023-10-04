@@ -27,30 +27,40 @@ function makeBoard() {
 
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  const htmlBoard = document.querySelector('#board');
 
   // TODO: add comment for this code
+  // create a <tr> element that will be the 'top' (where players insert their connect coin into the board-game)
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
+  // TODO: when a player clicks the 'top' area, call the handleClick function
   top.addEventListener("click", handleClick);
 
+  // TODO: create the coin (a '<td>' element) that falls into the slot after the player has dropped their coin
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
+  // TODO: Make sure the coin element (<td>) appends to the HTML board.
   htmlBoard.append(top);
 
   // TODO: add comment for this code
+  // Create the HTML table rows by creating <tr> elements. 
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
+    // Create the HTML cells (each element in each column) by using <td> elements
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
+      // Give each cell an organised ID attribute based on its position in the gride system, in order to be able to access it and call upon it later.
       cell.setAttribute("id", `${y}-${x}`);
+      // Append the "cell" to the HTMLBoard
       row.append(cell);
     }
+    // Finally, append each row to htmlBoard.
     htmlBoard.append(row);
   }
-}
+};
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
