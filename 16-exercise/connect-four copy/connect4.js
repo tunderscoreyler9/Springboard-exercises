@@ -65,14 +65,21 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  // TODO: Fix this function so that it finds the lowest empty spot in the game board and returns the y coordinate (or null if the column is filled).
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const piece = document.createElement('div');
+  piece.classList.add('piece');
+  piece.classList.add(`p${currPlayer}`);
+
+  // Now, add a spot where the coin will be dropped.
+  const spot = document.getElementById(`${y}-${x}`);
+  spot.append(piece);
+
 }
 
 /** endGame: announce game end */
