@@ -66,6 +66,12 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: Fix this function so that it finds the lowest empty spot in the game board and returns the y coordinate (or null if the column is filled).
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if (!board[y][x]) {
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -86,6 +92,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -101,7 +108,9 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  // TODO: add line to update in-memory board (meaning, the player #)
+  // this will assign each currPlayer to each dropped coin
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
@@ -111,9 +120,13 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  if (board.every(row => row.every(cell => cell))) {
+    return endGame('Tie!');
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -136,8 +149,11 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
+  // This outer for loop checks the rows
   for (let y = 0; y < HEIGHT; y++) {
+    // this inner for loop checks the inner columns
     for (let x = 0; x < WIDTH; x++) {
+      // Here, we increment (by 1) in each direction (horiz, vert, etc.) to check if _win() func returns true. If so, then we will return 'true' at the very end. 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
       let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
       let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
