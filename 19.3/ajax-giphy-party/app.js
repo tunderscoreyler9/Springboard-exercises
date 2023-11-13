@@ -22,4 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
         img.src = source;
         div.append(img);
     }
+
+    // remove images:
+    $("#remove-btn").click(function (evt) {
+        $("#img-spot").empty();
+    })
 });
