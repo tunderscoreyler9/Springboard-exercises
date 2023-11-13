@@ -1,8 +1,8 @@
-const MISSING_IMAGE_URL = "http://tinyurl.com/missing-tv";
-
 /** Given a query string, return array of matching shows:
  *     { id, name, summary, image, episodesUrl }
  */
+
+const MISSING_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/f/f7/Generic_error_message.png";
 
 async function searchShows(query) {
   let response = await axios.get(
