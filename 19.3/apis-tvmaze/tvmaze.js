@@ -11,22 +11,21 @@ const $searchForm = $("#search-form");
  *    Each show object should contain exactly: {id, name, summary, image}
  *    (if no image URL given by API, put in a default image URL)
  */
+const noImageResponse = "https://static.thenounproject.com/png/504708-200.png"
 
 async function getShowsByTerm(term) {
-  const response = await axios.get(`https://api.tvmaze.com/search/shows?q=${term}`);
-  // console.log(response);
-  const data = response.data;
-  for (let show of data) {
-    return [
-      {
-        id: show.show.id,
-        name: show.show.name,
-        summary: show.show.summary,
-        image: show.show.image
-      }
-    ];
-  }
-
+  let response = await axios.get(`https://api.tvmaze.com/search/shows?q=${term}`);
+  console.log(response);
+  let shows = response.data.map(function(result) {
+    let show = result.show;
+    return {
+      id: show.id,
+      name: show.name,
+      summary: show.summary,
+      image: show.image ? show.image.medium : noImageResponse
+    };
+  });
+  return shows;
 }
 
 
