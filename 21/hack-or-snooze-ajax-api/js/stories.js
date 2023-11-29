@@ -35,6 +35,7 @@ function generateStoryMarkup(story) {
       <small class="story-author">by ${story.author}</small>
       <small class="story-user">posted by ${story.username}</small>
       <button class="favorite-button">Favorite</button>
+      <button class="delete-button">Delete</button>
     </li>
   `);
 
@@ -44,7 +45,7 @@ function generateStoryMarkup(story) {
   }
 
   // Handle click on the favorite button
-  $story.find('.favorite-button').on('click', async function(event) {
+  $story.find('.favorite-button').on('click', async function (event) {
     event.preventDefault();
 
     if (currentUser) {
@@ -60,6 +61,24 @@ function generateStoryMarkup(story) {
         }
       } catch (error) {
         console.error('Error marking/unmarking story as favorite:', error);
+        // Handle error, if any
+      }
+    } else {
+      // Prompt user to log in if not logged in
+      // Example: show a message or modal to log in
+    }
+  });
+
+  $story.find('.delete-button').on('click', async function (event) {
+    event.preventDefault();
+
+    if (currentUser) {
+      try {
+        await story.deleteStory(currentUser);
+        // Remove the story from the DOM
+        $(`#${story.storyId}`).remove();
+      } catch (error) {
+        console.error('Error deleting story:', error);
         // Handle error, if any
       }
     } else {
@@ -113,7 +132,7 @@ $('#add-story-form').on('submit', async function (event) {
 
 // ******************************************** adding favs:
 // Example usage: Assuming 'story' is an instance of Story
-$('#favorite-button').on('click', async function(event) {
+$('#favorite-button').on('click', async function (event) {
   event.preventDefault();
 
   if (currentUser) {

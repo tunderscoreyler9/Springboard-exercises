@@ -60,6 +60,21 @@ class Story {
       throw new Error('Failed to unmark story as favorite');
     }
   }
+
+  async deleteStory(user) {
+    try {
+      await axios({
+        url: `${BASE_URL}/stories/${this.storyId}`,
+        method: "DELETE",
+        data: { token: user.loginToken },
+      });
+      // Remove the story from the user's ownStories list
+      user.ownStories = user.ownStories.filter(story => story.storyId !== this.storyId);
+    } catch (error) {
+      console.error('Error deleting story:', error);
+      throw new Error('Failed to delete story');
+    }
+  }
 }
 
 
