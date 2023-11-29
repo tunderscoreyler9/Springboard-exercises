@@ -50,3 +50,27 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+function displayNewStory(story) {
+  const $newStory = generateStoryMarkup(story); // Generate markup for the new story
+  $allStoriesList.prepend($newStory); // Prepend the new story to the top of the list
+}
+
+
+$('#add-story-form').on('submit', async function (event) {
+  event.preventDefault();
+
+  const title = $('#story-title').val();
+  const author = $('#story-author').val();
+  const url = $('#story-url').val();
+
+  try {
+    let newStory = await storyList.addStory(currentUser, { title, author, url });
+    // Update UI to display the new story (You'll need to write this part)
+    // For example, append the new story to the story list on the page.
+    displayNewStory(newStory); // Replace this with your UI update logic
+  } catch (error) {
+    console.error('Error adding story:', error);
+    // Handle error, if any
+  }
+});

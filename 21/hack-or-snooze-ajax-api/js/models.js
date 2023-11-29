@@ -73,8 +73,32 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(user, newStoryData) {
+    try {
+      const { title, author, url } = newStoryData;
+
+      // Make a POST request to the API endpoint to add the story
+      const response = await axios({
+        url: `${BASE_URL}/stories`,
+        method: "POST",
+        data: {
+          token: user.loginToken,
+          story: { title, author, url },
+        },
+      });
+
+      // Extract the created story data from the API response
+      const { story } = response.data;
+
+      // Create a new Story instance with the received data
+      const createdStory = new Story(story);
+
+      // Return the newly created Story instance
+      return createdStory;
+    } catch (error) {
+      console.error('Error adding story:', error);
+      throw new Error('Failed to add story');
+    }
   }
 }
 
@@ -90,13 +114,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+    username,
+    name,
+    createdAt,
+    favorites = [],
+    ownStories = []
+  },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
