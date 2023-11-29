@@ -27,6 +27,39 @@ class Story {
     // UNIMPLEMENTED: complete this function!
     return "hostname.com";
   }
+
+  // ************************* adding favourites: 
+  /** Mark the story as a favorite for the current user */
+  async markAsFavorite(user) {
+    try {
+      await axios({
+        url: `${BASE_URL}/users/${user.username}/favorites/${this.storyId}`,
+        method: "POST",
+        data: { token: user.loginToken },
+      });
+      // Update the current user's favorites list
+      user.favorites.push(this);
+    } catch (error) {
+      console.error('Error marking story as favorite:', error);
+      throw new Error('Failed to mark story as favorite');
+    }
+  }
+
+  /** Unmark the story as a favorite for the current user */
+  async unmarkAsFavorite(user) {
+    try {
+      await axios({
+        url: `${BASE_URL}/users/${user.username}/favorites/${this.storyId}`,
+        method: "DELETE",
+        data: { token: user.loginToken },
+      });
+      // Remove the story from the current user's favorites list
+      user.favorites = user.favorites.filter(story => story.storyId !== this.storyId);
+    } catch (error) {
+      console.error('Error unmarking story as favorite:', error);
+      throw new Error('Failed to unmark story as favorite');
+    }
+  }
 }
 
 
