@@ -111,6 +111,17 @@ function displayNewStory(story) {
   $allStoriesList.prepend($newStory); // Prepend the new story to the top of the list
 }
 
+async function loadMoreStories() {
+  try {
+    const moreStories = await StoryList.getStories();
+    storyList.stories.push(...moreStories.stories);
+    putStoriesOnPage();
+  } catch (error) {
+    console.error('Error loading more stories:', error);
+    // Handle error, if any
+  }
+}
+
 
 $('#add-story-form').on('submit', async function (event) {
   event.preventDefault();
@@ -153,5 +164,13 @@ $('#favorite-button').on('click', async function (event) {
   } else {
     // Prompt user to log in if not logged in
     // Example: show a message or modal to log in
+  }
+});
+
+$(window).on('scroll', function() {
+  // Check if user has scrolled to the bottom
+  if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+    // Load more stories
+    loadMoreStories();
   }
 });
