@@ -43,3 +43,14 @@ story = Story(
     """Once upon a time in a long-ago {place}, there lived a
        large {adjective} {noun}. It loved to {verb} {plural_noun}."""
 )
+
+# s = Story(["noun", "verb"], "I love to {verb} a good {noun}.")
+# ans = {"verb": "eat", "noun": "mango"}
+# result = s.generate(ans)
+# print(result)
+
+# s = Story(["place", "noun", "verb", "adjective", "plural_noun"],
+#     "Once upon a time in a long-ago {place}, there lived a large {adjective} {noun}. It loved to {verb} {plural_noun}.")
+# ans = {"place": "green lagoon", "noun": "cat", "verb": "hit", "adjective": "fat", "plural_noun": "cigarettes"}
+# result = s.generate(ans)
+# print(result)
