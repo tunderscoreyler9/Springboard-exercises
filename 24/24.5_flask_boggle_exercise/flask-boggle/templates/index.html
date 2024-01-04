@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Boggle Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <h1>Welcome to Boggle!</h1>
     <h2>Your Boggle Board:</h2>
     <table>
         {% for row in board %}
-            <tr>
+        <tr>
             {% for cell in row %}
-                <td>{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-            </tr>
+        </tr>
         {% endfor %}
     </table>
 
@@ -21,5 +25,10 @@
         <input type="text" name="guess" required>
         <input type="submit" value="Submit">
     </form>
+
+    <div id="score">Score: 0</div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
+
 </html>

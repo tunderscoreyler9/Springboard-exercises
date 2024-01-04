@@ -30,17 +30,17 @@ class Boggle():
         return board
 
     def check_valid_word(self, board, word):
-        """Check if a word is a valid word in the dictionary and/or the boggle board"""
+        """Check if a word is a valid word in the dictionary and/or the Boggle board"""
 
         word_exists = word in self.words
         valid_word = self.find(board, word.upper())
 
         if word_exists and valid_word:
             result = "ok"
-        elif word_exists and not valid_word:
-            result = "not-on-board"
+        elif not word_exists:
+            result = "not-a-word"
         else:
-            result = "not-word"
+            result = "not-on-board"
 
         return result
 
