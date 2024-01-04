@@ -1,7 +1,23 @@
 
-let score = 0;
-
 $(document).ready(function() {
+    let score = 0;
+    let timer = 60;
+
+    // gotta update the timer display:
+    function updateTimer() {
+        $('#time').text(timer); // update timer display
+
+        if(timer === 0) {
+            $('input[name="guess"]').prop('disabled', true);
+            $('input[type="submit"]').prop('disabled', true);
+            clearInterval(interval);
+        }
+        timer --;
+    }
+    // Call updateTimer function every second
+    let interval = setInterval(updateTimer, 1000);
+
+
     $('form').submit(function(event) {
         event.preventDefault();
         let guess = $('input[name="guess"]').val();

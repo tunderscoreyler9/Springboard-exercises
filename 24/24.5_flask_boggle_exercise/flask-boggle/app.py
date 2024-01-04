@@ -19,7 +19,9 @@ def index():
 
 @app.route('/check_guess', methods=['POST'])
 def check_guess():
-    # guess = request.form.get('guess')
+    if session.get('game_ended'):
+        return jsonify({'result': 'game-ended'})
+    
     guess = request.json.get('guess')
 
     if guess is None:
