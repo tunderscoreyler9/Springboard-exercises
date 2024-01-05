@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Boggle Game</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
     <h1>Welcome to Boggle!</h1>
     <h2>Your Boggle Board:</h2>
-    <table>
+    <table id="board-table">
         {% for row in board %}
         <tr>
             {% for cell in row %}
@@ -29,9 +27,11 @@
     <div id="score">Score: 0</div>
     <div id="timer">Time remaining: <span id="time">60</span> seconds</div>
 
+    <div>
+        <p>Highest Score: <span id="highest-score">{{ highest_score }}</span></p>
+        <p>Games Played: <span id="games-played">{{ games_played }}</span></p>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </body>
-
 </html>
