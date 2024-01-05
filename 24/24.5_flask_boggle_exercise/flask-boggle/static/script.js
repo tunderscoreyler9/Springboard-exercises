@@ -35,12 +35,12 @@ $(document).ready(function () {
     // Function to update the timer display and handle game end
     function updateTimer() {
         $('#time').text(timer); // Update timer display
-
+    
         if (timer === 0) {
             clearInterval(interval);
-            $('input[name="guess"]').prop('disabled', true);
-            $('input[type="submit"]').prop('disabled', true);
-
+            $('input[name="guess"]').prop('disabled', true); // Disable the input field
+            $('input[type="submit"]').prop('disabled', true); // Disable the submit button
+    
             // Send AJAX request to update statistics
             axios.post('/update_statistics', { score: score })
                 .then(function (response) {
@@ -51,8 +51,9 @@ $(document).ready(function () {
                     console.error('Error updating statistics:', error);
                 });
         }
+    
         timer--;
-    }
+    }    
 
     // Call updateTimer function every second
     let interval = setInterval(updateTimer, 1000);
