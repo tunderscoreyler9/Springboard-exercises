@@ -4,7 +4,6 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 class BoggleApp:
     def __init__(self):
-        
         self.app = Flask(__name__, static_url_path='/static')
         self.app.config['SECRET_KEY'] = 'your_secret_key_here'
         self.boggle_game = Boggle()
@@ -16,15 +15,11 @@ class BoggleApp:
         self.app.add_url_rule('/get_statistics', 'get_statistics', self.get_statistics, methods=['GET'])
 
     def index(self):
-        """Render the index page with a Boggle board."""
-        
         board = self.boggle_game.make_board()
         session['board'] = board
         return render_template('index.html', highest_score=session.get('highest_score', 0), games_played=session.get('games_played', 0), board=board)
 
     def check_guess(self):
-        """Check if the guessed word is valid in the Boggle game."""
-        
         guess = request.json.get('guess')
 
         if guess is None:
@@ -42,8 +37,6 @@ class BoggleApp:
         return jsonify(response)
 
     def update_statistics(self):
-        """Update game statistics based on the score."""
-        
         score = request.json.get('score')
         if score is not None:
             session['games_played'] = session.get('games_played', 0) + 1
@@ -53,11 +46,13 @@ class BoggleApp:
 
     def get_statistics(self):
         """Get game statistics (highest score and games played)."""
-        
-        return jsonify({'highestScore': session.get('highest_score', 0), 'gamesPlayed': session.get('games_played', 0)})
+        return jsonify({
+            'highestScore': session.get('highest_score', 0),
+            'gamesPlayed': session.get('games_played', 0)
+        })
 
 boggle_app = BoggleApp()
-app = boggle_app.app # Flask app instance (boggle_app.app)is used to run the Flask server
+app = boggle_app.app
 
 if __name__ == '__main__':
     app.run(debug=True)

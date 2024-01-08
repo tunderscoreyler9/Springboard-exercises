@@ -3,6 +3,7 @@ class BoggleGame {
         this.score = 0;
         this.timer = 60;
         this.interval = null;
+        this.guessedWords = new Set(); // Maintain a set of guessed words
     }
 
     updateStatistics() {
@@ -57,8 +58,12 @@ class BoggleGame {
 
         $('form').submit(event => {
             event.preventDefault();
-            let guess = $('input[name="guess"]').val();
-            console.log('Sending guess:', guess);
+            let guess = $('input[name="guess"]').val().trim().toLowerCase();
+
+            if (this.guessedWords.has(guess)) {
+                alert('You have already submitted this word!');
+                return;
+            }
 
             axios.post('/check_guess', { guess: guess })
                 .then(response => {
@@ -67,10 +72,12 @@ class BoggleGame {
                     if (result === 'ok') {
                         this.score += guess.length;
                         $('#score').text('Score: ' + this.score);
-                        console.log(this.score);
+                        this.guessedWords.add(guess); // Add the guessed word to the set
                         alert('Good guess!');
                     } else if (result === 'not-on-board') {
                         alert('Word not on the board!');
+                    } else if (result === 'duplicate') {
+                        alert('You have already submitted this word!');
                     } else {
                         alert('Not a word!');
                     }
