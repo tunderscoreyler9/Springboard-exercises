@@ -20,6 +20,19 @@ def create_app(user_blog_db, testing=True):
         users = User.query.all()
         return render_template('users.html', users=users)
     
+    @app.route('/', methods=["POST"])
+    def create_user():
+        first_name = request.form["first-name"].capitalize()
+        last_name = request.form["last-name"].capitalize()
+        image_url = request.form["image-url"]
+        
+        new_user = User(first_name=first_name, 
+                        last_name=last_name, 
+                        image_url=image_url)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect("/")
+    
     
     return app
 
