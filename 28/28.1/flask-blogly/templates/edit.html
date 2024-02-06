@@ -1,42 +1,44 @@
-<h1>Edit User "{{user.full_name}}"</h1>
-<form method="POST">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="form-group row">
-        <label for="first_name" class="first_name_label">First Name</label>
-        <div class="form-input div">
-            <input type="text"
-            class="form-control"
-            id="first_name"
-            name="first_name"
-            value="{{user.first_name}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Mode</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <h1>Edit User "{{user.full_name}}"</h1>
+    <form method="POST">
+
+        <div class="form-group row">
+            <label for="first_name" class="first_name_label">First Name</label>
+            <div class="form-input div">
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="last_name" class="last_name_label">Last Name</label>
-        <div class="form-input div">
-            <input type="text"
-            class="form-control"
-            id="last_name"
-            name="last_name"
-            value="{{user.last_name}}">
+        <div class="form-group row">
+            <label for="last_name" class="last_name_label">Last Name</label>
+            <div class="form-input div">
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="image_url" class="image_url_label">Image URL</label>
-        <div class="form-input div">
-            <input type="text"
-            class="form-control"
-            id="image_url"
-            name="image_url"
-            value="{{user.image_url}}">
+        <div class="form-group row">
+            <label for="image_url" class="image_url_label">Image URL</label>
+            <div class="form-input div">
+                <input type="text" class="form-control" id="image_url" name="image_url" value="{{user.image_url}}">
+            </div>
         </div>
-    </div>
 
-    <div>
-        <a href="/" class="btn cancel-btn">Cancel</a>
-        <button type="submit" class="btn btn-save">Save</button>
-    </div>
+        <div>
+            <a href="/" class="btn cancel-btn">Cancel</a>
+            <button type="submit" class="btn btn-save">Save</button>
+        </div>
 
-</form>
+    </form>
+</body>
+
+</html>

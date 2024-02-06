@@ -4,19 +4,55 @@ body {
     text-align: center;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 0 auto 20px;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+li:hover {
+    background-color: #f5f5f5;
+}
+
+li img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+}
+
+.details_row {
+    margin: 20px;
+}
+
 h1 {
     color: #333;
     margin-bottom: 20px;
 }
 
-img {
+h2 {
+    color: #333;
+    margin-top: 10px;
+}
+
+.user_image_div img {
     max-width: 100%;
-    height: auto;
+    max-height: 300px;
     border-radius: 8px;
     margin-bottom: 20px;
 }
 
-button {
+.edit_delete_div {
+    margin-top: 20px;
+}
+
+.btn-edit, .btn-delete {
     background-color: #4CAF50;
     color: white;
     padding: 10px;
@@ -26,12 +62,15 @@ button {
     border-radius: 5px;
 }
 
-a {
-    text-decoration: none;
-    color: white;
+.btn-edit:hover, .btn-delete:hover {
+    background-color: #45a049;
 }
 
-li a {
+a {
     text-decoration: none;
     color: black;
+}
+
+a:hover {
+    text-decoration: underline;
 }

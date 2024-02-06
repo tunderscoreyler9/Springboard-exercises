@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, flash, session, jsonify
+from flask import Flask, request, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, text, User
 
@@ -17,7 +17,7 @@ def create_app(user_blog_db, testing=True):
     @app.route('/', methods=["GET"])
     def show_users():
         """Lists all users and shows Add User form"""
-        users = User.query.all()
+        users = User.query.order_by(User.first_name, User.last_name).all()
         return render_template('users.html', users=users)
     
     @app.route('/', methods=["POST"])
@@ -54,6 +54,14 @@ def create_app(user_blog_db, testing=True):
         user.image_url = request.form['image_url']
         
         db.session.add(user)
+        db.session.commit()
+        return redirect('/')
+    
+    @app.route('/<int:user_id>/delete', methods=["POST"])
+    def delete_user(user_id):
+        """Handle form submission for deleting a user"""
+        user = User.query.get_or_404(user_id)
+        db.session.delete(user)
         db.session.commit()
         return redirect('/')
 
