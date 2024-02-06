@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}}</title>
+</head>
+
+<body>
+    <h1>{{user.first_name}} {{user.last_name}}</h1>
+    <br>
+    {% if user.image_url %}
+    <img src="{{user.image_url}}" alt="{{user.first_name}} {{user.last_name}}">
+    {% else %}
+    <p>No image available</p>
+    {% endif %}
+    <br>
+    <button>Edit</button>
+    <button>Delete</button>
+    <br>
+    <button><a href="/">HomePage</a></button>
+
+</body>
+
+</html>

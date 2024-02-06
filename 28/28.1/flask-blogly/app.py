@@ -33,6 +33,12 @@ def create_app(user_blog_db, testing=True):
         db.session.commit()
         return redirect("/")
     
+    @app.route('/<int:user_id>')
+    def show_user(user_id):
+        """Shows details about a single user"""
+        user = User.query.get_or_404(user_id)
+        return render_template('details.html', user=user)
+    
     
     return app
 
