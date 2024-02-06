@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, flash, session
+from flask import Flask, request, render_template, redirect, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, text, User
 
@@ -22,9 +22,9 @@ def create_app(user_blog_db, testing=True):
     
     @app.route('/', methods=["POST"])
     def create_user():
-        first_name = request.form["first-name"].capitalize()
-        last_name = request.form["last-name"].capitalize()
-        image_url = request.form["image-url"]
+        first_name = request.form["first_name"].capitalize()
+        last_name = request.form["last_name"].capitalize()
+        image_url = request.form["image_url"]
         
         new_user = User(first_name=first_name, 
                         last_name=last_name, 
@@ -38,6 +38,25 @@ def create_app(user_blog_db, testing=True):
         """Shows details about a single user"""
         user = User.query.get_or_404(user_id)
         return render_template('details.html', user=user)
+    
+    @app.route('/<int:user_id>/edit', methods=["GET"])
+    def edit_user(user_id):
+        """Show a form to edit an exisiting user"""
+        user = User.query.get_or_404(user_id)
+        return render_template('edit.html', user=user)
+    
+    @app.route('/<int:user_id>/edit', methods=["POST"])
+    def update_user(user_id):
+        """Handle form submission for updating a user"""
+        user = User.query.get_or_404(user_id)
+        user.first_name = request.form['first_name']
+        user.last_name = request.form['last_name']
+        user.image_url = request.form['image_url']
+        
+        db.session.add(user)
+        db.session.commit()
+        return redirect('/')
+
     
     
     return app

@@ -9,18 +9,33 @@
 </head>
 
 <body>
-    <h1>{{user.first_name}} {{user.last_name}}</h1>
-    <br>
-    {% if user.image_url %}
-    <img src="{{user.image_url}}" alt="{{user.first_name}} {{user.last_name}}">
-    {% else %}
-    <p>No image available</p>
-    {% endif %}
-    <br>
-    <button>Edit</button>
-    <button>Delete</button>
-    <br>
-    <button><a href="/">HomePage</a></button>
+    <div class="details_row">
+        <h1>{{user.full_name}}</h1>
+        <br>
+
+        {% if user.image_url %}
+        <div class="user_image_div">
+            <img src="{{user.image_url}}" alt="{{user.first_name}}'s pic's unavailable" class="img-fluid">
+        </div>
+        {% endif %}
+
+        <br>
+        <div class="edit_delete_div">
+            <form>
+                <button class="btn btn-edit"
+                formaction="/{{user.id}}/edit"
+                formmethod="GET">Edit
+                </button>
+
+                <button class="btn btn-delete"
+                formaction="/{{user.id}}/delete"
+                formmethod="POST">Delete
+                </button>
+            </form>
+        </div>
+        <br>
+        <button><a href="/">HomePage</a></button>
+    </div>
 
 </body>
 
