@@ -41,6 +41,7 @@ h2 {
     margin-top: 10px;
 }
 
+
 .user_image_div img {
     max-width: 100%;
     max-height: 300px;
@@ -73,4 +74,56 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-input {
+    display: inline-block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #999;
+    color: white;
+}
+
+.btn-save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-homepage {
+    background-color: #05a7f8;
+    color: white;
+}
+
+.btn:hover,
+.cancel-btn:hover,
+.btn-save:hover {
+    opacity: 0.8;
 }

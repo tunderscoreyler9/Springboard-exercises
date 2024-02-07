@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name}}</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
@@ -34,7 +34,7 @@
             </form>
         </div>
         <br>
-        <button><a href="/">HomePage</a></button>
+        <button class="btn btn-homepage"><a href="/">HomePage</a></button>
     </div>
 
 </body>
