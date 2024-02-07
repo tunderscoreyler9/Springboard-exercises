@@ -4,9 +4,11 @@ Flask User Blog is a simple web application built with Flask, a lightweight web 
 
 ## Features
 
-- Display a list of users with their first name, last name, and image URL.
-- Add new users with the ability to input first name, last name, and image URL.
-- Automatically capitalize the first letter of entered first and last names for consistent formatting.
+- **Display a list of users** with their first name, last name, and image URL.
+- **Add new users** with the ability to input first name, last name, and image URL.
+- **User Details**: Click on a user to view their details.
+- **Edit Users**: Modify user information as needed.
+- **Delete Users**: Remove users from the system with the click of a button.
 
 ## Technologies Used
 
