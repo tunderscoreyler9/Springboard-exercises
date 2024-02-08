@@ -42,7 +42,7 @@ h2 {
 }
 
 
-.user_image_div img {
+.user_image {
     max-width: 100%;
     max-height: 300px;
     border-radius: 8px;

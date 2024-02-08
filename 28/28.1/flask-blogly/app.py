@@ -11,6 +11,7 @@ def create_app(user_blog_db, testing=True):
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SECRET_KEY'] = "dont_tell_the_code"
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    app.config['DEFAULT_IMAGE_URL'] = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
     debug = DebugToolbarExtension(app)
     # db.init_app(app)
     
@@ -34,10 +35,10 @@ def create_app(user_blog_db, testing=True):
         return redirect("/")
     
     @app.route('/<int:user_id>')
-    def show_user(user_id):
+    def show_user_details(user_id):
         """Shows details about a single user"""
         user = User.query.get_or_404(user_id)
-        return render_template('details.html', user=user)
+        return render_template('details.html', user=user, default_image_url=app.config['DEFAULT_IMAGE_URL'])
     
     @app.route('/<int:user_id>/edit', methods=["GET"])
     def edit_user(user_id):

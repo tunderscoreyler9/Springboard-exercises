@@ -15,7 +15,9 @@
 
         {% if user.image_url %}
         <div class="user_image_div">
-            <img src="{{user.image_url}}" alt="{{user.first_name}}'s pic's unavailable" class="img-fluid">
+            <img class="user_image" src="{{user.image_url}}" alt="{{user.first_name}}'s pic's unavailable" class="img-fluid">
+            {% else %}
+            <img class="user_image" src="{{ default_image_url }}" alt="Default Image">
         </div>
         {% endif %}
 
