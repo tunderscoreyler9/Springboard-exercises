@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
+import datetime
 db = SQLAlchemy()
 
 def connect_db(app):
@@ -8,29 +9,44 @@ def connect_db(app):
         db.init_app(app)
         db.create_all()
 
+DEFAULT_IMAGE_URL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+
+
 class User(db.Model):
-    __tablename__ = 'users'
-    def __repr__(self):
-        user = self
-        return f"<User id={user.id} first_name={user.first_name} last_name={user.last_name} image_url={user.image_url}>"
-    
-    id = db.Column(db.Integer,
-                   primary_key= True,
-                   autoincrement= True)
-    
-    first_name = db.Column(db.String(15),
-                           nullable= False,
-                           unique= False)
-    
-    last_name = db.Column(db.String(15),
-                           nullable= False,
-                           unique= False)
-    
-    image_url = db.Column(db.String(2083), 
-                          nullable=True, 
-                          unique=False)
-    
+    """Site user."""
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.Text, nullable=False)
+    last_name = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.Text, nullable=False, default=DEFAULT_IMAGE_URL)
+
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+
     @property
     def full_name(self):
-        """Return full name of user"""
+        """Return full name of user."""
+
         return f"{self.first_name} {self.last_name}"
+
+
+class Post(db.Model):
+    """Blog post."""
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    @property
+    def friendly_date(self):
+        """Return nicely-formatted date."""
+
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")

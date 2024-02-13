@@ -1,5 +1,5 @@
 from app import create_app
-from models import db, User
+from models import db, User, Post, connect_db, db
 
 app = create_app('user_blog_db', testing=True)
 
