@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, text, User, Post
+from models import db, connect_db, text, User, Post, Tag, PostTag
 
 def create_app(user_blog_db, testing=True):
     app = Flask(__name__)
@@ -186,4 +186,4 @@ def create_app(user_blog_db, testing=True):
 if __name__ == '__main__':
     app = create_app('user_blog_db')
     connect_db(app)
-    app.run(debug=True)
+    # app.run(debug=True)
