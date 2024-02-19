@@ -177,6 +177,22 @@ def create_app(user_blog_db, testing=True):
         flash(f"Post '{post.title} deleted.")
 
         return redirect(f"/users/{post.user_id}")
+    
+    
+    
+    ##############################################################################
+    # Tags route
+    @app.route('/tags')
+    def tags_index():
+        """Show a page with all created tags and info"""
+        tags = Tag.query.all()
+        return render_template('tags/index.html', tags=tags)
+    
+    @app.route('/tags/<int:tag_id>')
+    def tags_show(tag_id):
+        """Renders a page to show info about a specific tag, based on its ID"""
+        tag = Tag.query.get_or_404(tag_id)
+        return render_template('tags/show.html', tag=tag)
 
     
     
@@ -186,4 +202,4 @@ def create_app(user_blog_db, testing=True):
 if __name__ == '__main__':
     app = create_app('user_blog_db')
     connect_db(app)
-    # app.run(debug=True)
+    app.run(debug=True)
