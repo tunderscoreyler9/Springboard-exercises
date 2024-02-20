@@ -264,4 +264,4 @@ def create_app(user_blog_db, testing=True):
 if __name__ == '__main__':
     app = create_app('user_blog_db')
     connect_db(app)
-    app.run(debug=True)
+    # app.run(debug=True)
