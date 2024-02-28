@@ -5,6 +5,7 @@ from models import Pet, text, db, connect_db
 app = create_app('adopt_db', testing=True)
 
 with app.app_context():
+    db.init_app(app)
     db.drop_all()
     db.create_all()
 

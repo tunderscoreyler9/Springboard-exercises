@@ -13,10 +13,9 @@ def create_app(adopt_db, testing=True):
     app.config['SECRET_KEY'] = "secret_lil_code"
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
     debug = DebugToolbarExtension(app)
-    # db.init_app(app)
 
     
-    @app.route("/")
+    @app.route("/", methods=["GET"])
     def list_pets():
         """List all pets."""
 
@@ -69,6 +68,16 @@ def create_app(adopt_db, testing=True):
         info = {"name": pet.name, "age": pet.age}
 
         return jsonify(info)
+    
+    @app.route("/<int:pet_id>/delete", methods=["POST"])
+    def delete_pet(pet_id):
+        """Handle form submission to delete a Pet"""
+        pet = Pet.query.get_or_404(pet_id)
+        db.session.delete(pet)
+        db.session.commit()
+        
+        flash(f"Pet '{pet.name} deleted.")
+        return redirect("/")
     
     
     

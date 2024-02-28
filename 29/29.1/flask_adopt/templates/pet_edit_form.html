@@ -11,8 +11,15 @@
 <h2>Update</h2>
 
 <form method="POST">
-  {% include "_form.html" %}
-  <button class="btn btn-primary" type="submit">Update</button>
+    {% include "_form.html" %}
+    <button class="btn btn-primary" type="submit">Update</button>
+    <button class="btn btn-danger btn-sm" formaction="/{{ pet.id }}/delete" formmethod="POST">Delete
+    </button>
 </form>
+
+<!-- <form method="POST">
+    <button class="btn btn-danger btn-sm" formaction="/{{ pet.id }}/delete" formmethod="POST">Delete
+    </button>
+</form> -->
 
 {% endblock %}
