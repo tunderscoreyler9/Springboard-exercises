@@ -86,4 +86,4 @@ def create_app(adopt_db, testing=True):
 if __name__ == '__main__':
     app = create_app('adopt_db')
     connect_db(app)
-    app.run(debug=True)
+    # app.run(debug=True)
