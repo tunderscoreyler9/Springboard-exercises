@@ -1,6 +1,6 @@
 """Flask app for Cupcakes"""
 from flask import Flask, request, jsonify, render_template
-from models import db, connect_db, Todo
+from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
 

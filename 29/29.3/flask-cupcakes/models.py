@@ -2,6 +2,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 
+DEFAULT_IMAGE = "https://tinyurl.com/demo-cupcake"
 db = SQLAlchemy()
 
 def connect_db(app):
@@ -15,3 +16,18 @@ def connect_db(app):
         db.init_app(app)
         db.create_all()
 
+
+class Cupcake(db.Model):
+    """Cupcake model"""
+    
+    __tablename__ = "cupcakes"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    flavor = db.Column(db.Text, nullable=False)
+    size = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Float, nullable=False)
+    image = db.Column(db.Text)
+    
+def image_url(self):
+    """Return a cupcake's image, or a default image for cupcakes w/ no photo"""
+    
+    return self.image or DEFAULT_IMAGE
