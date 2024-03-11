@@ -26,8 +26,20 @@ class Cupcake(db.Model):
     size = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Float, nullable=False)
     image = db.Column(db.Text)
+
+    def serialize(self):
+        """Returns a python dict representation of cupcake which we can turn into JSON"""
+        return {
+            'id': self.id,
+            'flavor': self.flavor,
+            'size': self.size,
+            'rating': self.rating,
+            'image': self.image
+        }
     
-def image_url(self):
-    """Return a cupcake's image, or a default image for cupcakes w/ no photo"""
-    
-    return self.image or DEFAULT_IMAGE
+    def image_url(self):
+        """Return a cupcake's image, or a default image for cupcakes w/ no photo"""
+        return self.image or DEFAULT_IMAGE
+
+    def __repr__(self):
+        return f"<Cupcake {self.id} flavor{self.flavor} size{self.size} rating{self.rating} image{self.image}>"

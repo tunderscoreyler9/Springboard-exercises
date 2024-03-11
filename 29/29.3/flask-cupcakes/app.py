@@ -10,3 +10,12 @@ app.config['SECRET_KEY'] = "oh-so-secret"
 app.app_context().push()
 
 connect_db(app)
+
+###########################
+# RESTFUL CUPCAKES JSON API
+###########################
+@app.route('/api/cupcakes', methods=["GET"])
+def list_cupcakes():
+    """Returns JSON w/ all cupcakes"""
+    all_cupcakes = [cupcake.serialize() for cupcake in Cupcake.query.all()]
+    return jsonify(cupcakes=all_cupcakes)
