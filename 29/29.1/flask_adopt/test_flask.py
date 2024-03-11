@@ -49,6 +49,7 @@ class AdoptAppTestCase(TestCase):
             
             resp = client.post("/add", data=pet_to_add, follow_redirects=True)
             html = resp.get_data(as_text=True)
+            print(html)
             
             # pet = Pet.query.filter(Pet.name == "TestPet2").first()
             # print(pet)
@@ -68,11 +69,13 @@ class AdoptAppTestCase(TestCase):
         """Test editing an existing pet."""
         with app.test_client() as client:
             # Define data for editing the pet
-            edited_data = {"name": "Toto 2.0", "notes": "Updated notes", "available": False}
+            # edited_data = {"notes": "Updated notes", "available": False}
+            edited_data = {"photo_url": "https://tinyjpg.com/images/social/website.jpg", "notes": "this is an update", "available": False}
 
             # Make a POST request to edit the pet
             resp = client.post(f"/{self.sample_pet_id}", data=edited_data, follow_redirects=True)
             html = resp.get_data(as_text=True)
+            print(resp.status_code)
             print(html)
 
 
