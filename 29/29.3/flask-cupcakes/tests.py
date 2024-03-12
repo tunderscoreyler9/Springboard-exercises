@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app import app
+from app import app, create_cupcake
 from models import db, Cupcake
 
 # Use test database and don't clutter tests with SQL
@@ -49,6 +49,7 @@ class CupcakeViewsTestCase(TestCase):
         db.session.rollback()
 
     def test_list_cupcakes(self):
+        """Tests listing all cupcake JSON data via POST request"""
         with app.test_client() as client:
             resp = client.get("/api/cupcakes")
 
@@ -68,6 +69,7 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_get_cupcake(self):
+        """Tests getting a cupcake via GET request"""
         with app.test_client() as client:
             url = f"/api/cupcakes/{self.cupcake.id}"
             resp = client.get(url)
@@ -85,6 +87,7 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_create_cupcake(self):
+        """Tests creating a cupcake via POST request"""
         with app.test_client() as client:
             url = "/api/cupcakes"
             resp = client.post(url, json=CUPCAKE_DATA_2)
@@ -107,3 +110,33 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+    
+    def test_update_cupcake(self):
+        """Tests updating a cupcake via PATCH request"""
+        with app.test_client() as client:
+            new_flavor = "New Moon"
+            new_size = "Moon Size"
+            updated_data = {"flavor": new_flavor, "size": new_size}
+
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.patch(url, json=updated_data)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+            print(data)
+
+            self.assertEqual(data, {
+                "cupcake": {
+                    "id": self.cupcake.id,
+                    "flavor": new_flavor,
+                    "size": new_size,
+                    "rating": self.cupcake.rating,
+                    "image": self.cupcake.image
+                }
+            })
+
+            # Verify database reflects update
+            updated_cupcake = Cupcake.query.get(self.cupcake.id)
+            self.assertEqual(updated_cupcake.flavor, new_flavor)
+            self.assertEqual(updated_cupcake.size, new_size)
