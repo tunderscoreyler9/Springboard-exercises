@@ -154,3 +154,21 @@ class CupcakeViewsTestCase(TestCase):
 
             cupcake = Cupcake.query.get(self.cupcake.id)
             self.assertIsNone(cupcake)
+    
+    def test_get_cupcake_not_found(self):
+        """Test to make sure that the GET route returns 404 when a cupcake cannot be found"""
+        with app.test_client() as client:
+            response = client.get(f"/api/cupcakes/9997799")
+            self.assertEqual(response.status_code, 404)
+    
+    def test_patch_cupcake_not_found(self):
+        """Test to make sure that the PATCH route returns 404 when a cupcake cannot be found"""
+        with app.test_client() as client:
+            response = client.patch(f"/api/cupcakes/4499876")
+            self.assertEqual(response.status_code, 404)
+    
+    def test_delete_cupcake_not_found(self):
+        """Test to make sure that the DELETE route returns 404 when a cupcake cannot be found"""
+        with app.test_client() as client:
+            response = client.delete(f"/api/cupcakes/9997799")
+            self.assertEqual(response.status_code, 404)
