@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Our Cupcakes</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center display-3">Cupcake Varieties:</h1>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <ul id="cupcake-list" class="d-flex flex-wrap justify-content-between"></ul>
+                <h2>Add a New Cupcake</h2>
+                <form id="cupcake-form">
+                    <label for="flavor">Flavor:</label>
+                    <input type="text" id="flavor" name="flavor" required>
+                    <br>
+                    <label for="size">Size:</label>
+                    <input type="text" id="size" name="size" required>
+                    <br>
+                    <label for="rating">Rating (1-10):</label>
+                    <input type="number" id="rating" name="rating" min="1" max="10" required>
+                    <br>
+                    <label for="image">Image URL (optional):</label>
+                    <input type="url" id="image" name="image">
+                    <br>
+                    <button type="submit">Add Cupcake</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+        integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static', filename='cupcakes.js') }}"></script>
+
+</body>
+
+</html>

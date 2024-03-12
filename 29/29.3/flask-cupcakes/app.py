@@ -11,6 +11,13 @@ app.app_context().push()
 
 connect_db(app)
 
+@app.route('/', methods=["GET"])
+def index_page():
+    """Renders html template that includes some JS - NOT PART OF JSON API!"""
+    cupcakes = Cupcake.query.all()
+    return render_template('index.html', cupcakes=cupcakes)
+
+
 ###########################
 # RESTFUL CUPCAKES JSON API
 ###########################
