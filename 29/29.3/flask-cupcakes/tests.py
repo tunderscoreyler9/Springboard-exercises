@@ -124,7 +124,6 @@ class CupcakeViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
 
             data = resp.json
-            print(data)
 
             self.assertEqual(data, {
                 "cupcake": {
@@ -140,3 +139,18 @@ class CupcakeViewsTestCase(TestCase):
             updated_cupcake = Cupcake.query.get(self.cupcake.id)
             self.assertEqual(updated_cupcake.flavor, new_flavor)
             self.assertEqual(updated_cupcake.size, new_size)
+    
+    def test_delete_cupcake(self):
+        """Tests deleting a cupcake via DELETE request"""
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+            self.assertEqual(data, {"message": "deleted"})
+
+            cupcake = Cupcake.query.get(self.cupcake.id)
+            self.assertIsNone(cupcake)
