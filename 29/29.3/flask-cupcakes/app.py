@@ -68,3 +68,14 @@ def delete_cupcake(id):
     db.session.delete(cupcake)
     db.session.commit()
     return jsonify(message="deleted")
+
+@app.route('/api/cupcakes/search', methods=["GET"])
+def search_cupcakes():
+    """Search cupcakes based on query parameter"""
+    search_term = request.args.get("q")
+    
+    # Implement search logic based on search_term
+    # (e.g., filter by flavor, size, or rating using SQLAlchemy)
+    filtered_cupcakes = Cupcake.query.filter(Cupcake.flavor.like(f"%{search_term}%")).all()
+
+    return jsonify({"cupcakes": [cupcake.serialize() for cupcake in filtered_cupcakes]})

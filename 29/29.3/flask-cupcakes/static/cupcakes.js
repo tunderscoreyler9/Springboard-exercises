@@ -24,6 +24,29 @@ $(document).ready(function () {
                 alert("Error adding cupcake! Please try again.");
             });
     });
+
+    // Handle search form submission
+    $("#search-form").submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const searchTerm = $("#search-term").val();
+
+        // Send a GET request to search endpoint with the search term
+        axios.get(`/api/cupcakes/search?q=${searchTerm}`)
+            .then(function (response) {
+                const cupcakes = response.data.cupcakes;
+                $("#cupcake-list").empty(); // Clear existing list items
+
+                cupcakes.forEach(function (cupcake) {
+                    addCupcakeToList(cupcake);
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert("Error searching for cupcakes! Please try again.");
+            });
+    });
+
 });
 
 // Function to fetch cupcakes from the API and update the list

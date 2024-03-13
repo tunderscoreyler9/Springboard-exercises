@@ -11,12 +11,18 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center display-3">Cupcake Varieties:</h1>
+        <h2 class="text-center display-6">Search Cupcakes</h2>
+        <form id="search-form" class="row justify-content-center">
+            <label for="search-term">Search:</label>
+            <input type="text" id="search-term" placeholder="Enter cupcake flavor" name="search" required>
+            <button type="submit">Find Cupcakes</button>
+        </form>
+        <h1 class="text-center display-6">Cupcake Varieties:</h1>
         <div class="row justify-content-center">
             <div class="col-6">
                 <ul id="cupcake-list" class="d-flex flex-wrap justify-content-between"></ul>
-                <h2>Add a New Cupcake</h2>
-                <form id="cupcake-form">
+                <h2 class="text-center display-6">Add a New Cupcake</h2>
+                <form id="cupcake-form" class="text-center display-6">
                     <label for="flavor">Flavor:</label>
                     <input type="text" id="flavor" name="flavor" required>
                     <br>
