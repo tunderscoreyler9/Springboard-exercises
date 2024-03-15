@@ -56,10 +56,9 @@ class CupcakeService {
 $(document).ready(function () {
     const cupcakeService = new CupcakeService("http://127.0.0.1:5000");
 
-    // Fetch all cupcakes on page load
     cupcakeService.fetchAllCupcakes()
         .then(cupcakes => {
-            $("#cupcake-list").empty(); // Clear existing list items (if any)
+            $("#cupcake-list").empty();
             cupcakes.forEach(cupcake => addCupcakeToList(cupcake));
         })
         .catch(error => {
@@ -67,23 +66,23 @@ $(document).ready(function () {
             alert("Error fetching cupcakes! Please try again.");
         });
 
-    // Handle form submission for adding a new cupcake
-    $("#cupcake-form").submit(function (event) {
-        event.preventDefault(); // Prevent default form submission
 
-        // Collect form data
+
+    $("#cupcake-form").submit(function (event) {
+        event.preventDefault();
+
         const flavor = $("#flavor").val();
         const size = $("#size").val();
         const rating = parseInt($("#rating").val());
-        const image = $("#image").val() || ""; // Handle empty image URL
+        const image = $("#image").val() || "";
 
         const cupcakeData = { flavor, size, rating, image };
 
         cupcakeService.createCupcake(cupcakeData)
             .then(cupcake => {
                 addCupcakeToList(cupcake);
-                $("#cupcake-form").trigger("reset"); // Clear form after successful creation
-                alert("Cupcake created successfully!"); // Add success message
+                $("#cupcake-form").trigger("reset");
+                alert("Cupcake created successfully!");
             })
             .catch(error => {
                 console.error(error);
@@ -91,7 +90,7 @@ $(document).ready(function () {
             });
     });
 
-    // Handle search form submission
+
     $("#search-form").submit(function (event) {
         event.preventDefault();
 
@@ -108,13 +107,32 @@ $(document).ready(function () {
             });
     });
 
-    // Function to add cupcake to the list
+
     function addCupcakeToList(cupcake) {
         const imageSrc = cupcake.image || "https://tinyurl.com/demo-cupcake";
-        const listItem = $(`<li>
+        const listItem = $(`<li data-cupcake-id=${cupcake.id}>
         ${cupcake.flavor} - ${cupcake.size} (Rating: ${cupcake.rating})
         <img src="${imageSrc}" alt="Cupcake Image" style="width: 150px; height: 150px; class="cupcake-image">
+        <button class="delete-button">X</button>
       </li>`);
         $("#cupcake-list").append(listItem);
-    }
+    };
+
+    $(document).on("click", ".delete-button", async function (event) {
+        const button = $(this);
+        const cupcakeListItem = button.closest("li");
+        const cupcakeId = cupcakeListItem.data("cupcake-id");
+
+        
+        if (confirm("Are you sure you want to delete this cupcake?")) {
+            try {
+                await cupcakeService.deleteCupcake(cupcakeId);
+                cupcakeListItem.remove();
+                alert("Cupcake deleted successfully!");
+            } catch (error) {
+                console.error(error);
+                alert("Error deleting cupcake! Please try again.");
+            }
+        }
+    });
 });

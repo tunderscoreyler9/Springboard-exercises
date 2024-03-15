@@ -71,11 +71,8 @@ def delete_cupcake(id):
 
 @app.route('/api/cupcakes/search', methods=["GET"])
 def search_cupcakes():
-    """Search cupcakes based on query parameter"""
+    """Search cupcakes based on query parameter (flavor of cupcake)"""
     search_term = request.args.get("q")
-    
-    # Implement search logic based on search_term
-    # (e.g., filter by flavor, size, or rating using SQLAlchemy)
     filtered_cupcakes = Cupcake.query.filter(Cupcake.flavor.like(f"%{search_term}%")).all()
 
     return jsonify({"cupcakes": [cupcake.serialize() for cupcake in filtered_cupcakes]})
