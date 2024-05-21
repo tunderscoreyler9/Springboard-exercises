@@ -2,46 +2,41 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const ExpressError = require('./expressError');
+const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helpers');
+
 app.use(express.urlencoded({ extended: true })); // For Form Data
 
-const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helpers');
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Root route to render index.html
+// Root route to render index.ejs
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.render('layout', { title: 'Home', body: `
+        <h1>Welcome to the Calculator App</h1>
+        <p>Select an operation to perform:</p>
+        <ul>
+            <li><a href="/mean">Calculate Mean</a></li>
+            <li><a href="/median">Calculate Median</a></li>
+            <li><a href="/mode">Calculate Mode</a></li>
+        </ul>
+    ` });
 });
 
-// Mean:
-
-app.get('/mean', function (req, res, next) {
-    if (!req.query.nums) {
-        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400)
-    }
-    let numsAsStrings = req.query.nums.split(',');
-    // check if anything bad was put in
-    let nums = convertAndValidateNumsArray(numsAsStrings);
-    if (nums instanceof Error) {
-        throw new ExpressError(nums.message);
-    }
-
-
-    let result = {
-        operation: "mean",
-        result: findMean(nums)
-    }
-
-    return res.send(result);
-});
-
-// Route to serve mean.html
 app.get('/mean', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'mean.html'));
+    res.render('layout', { title: 'Calculate Mean', body: `
+        <h1>Calculate Mean</h1>
+        <form action="/mean/post" method="POST">
+            <label for="mean">Enter numbers (comma-separated):</label>
+            <input type="text" id="mean" name="mean" placeholder="e.g. 1,2,3,4">
+            <button type="submit">Calculate</button>
+        </form>
+    ` });
 });
 
-// Route to handle mean calculation
 app.post('/mean/post', (req, res, next) => {
     try {
         let numsAsStrings = req.body.mean.split(',');
@@ -55,39 +50,28 @@ app.post('/mean/post', (req, res, next) => {
             result: findMean(nums)
         };
 
-        return res.send(result);
+        return res.render('layout', { title: 'Calculation Result', body: `
+            <h1>Calculation Result</h1>
+            <p>Operation: ${result.operation}</p>
+            <p>Result: ${result.result}</p>
+            <a href="/">Go back to Home</a>
+        ` });
     } catch (e) {
         return next(e);
     }
 });
 
-// Median: - - >
-app.get('/median', function (req, res, next) {
-    if (!req.query.nums) {
-        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400)
-    }
-    let numsAsStrings = req.query.nums.split(',');
-    // check if anything bad was put in
-    let nums = convertAndValidateNumsArray(numsAsStrings);
-    if (nums instanceof Error) {
-        throw new ExpressError(nums.message);
-    }
-
-    let result = {
-        operation: "median",
-        result: findMedian(nums)
-    }
-
-    return res.send(result);
-
-});
-
-// Route to serve median.html
 app.get('/median', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'median.html'));
+    res.render('layout', { title: 'Calculate Median', body: `
+        <h1>Calculate Median</h1>
+        <form action="/median/post" method="POST">
+            <label for="median">Enter numbers (comma-separated):</label>
+            <input type="text" id="median" name="median" placeholder="e.g. 1,2,3,4">
+            <button type="submit">Calculate</button>
+        </form>
+    ` });
 });
 
-// Route to handle median calculation
 app.post('/median/post', (req, res, next) => {
     try {
         let numsAsStrings = req.body.median.split(',');
@@ -101,40 +85,28 @@ app.post('/median/post', (req, res, next) => {
             result: findMedian(nums)
         };
 
-        return res.send(result);
+        return res.render('layout', { title: 'Calculation Result', body: `
+            <h1>Calculation Result</h1>
+            <p>Operation: ${result.operation}</p>
+            <p>Result: ${result.result}</p>
+            <a href="/">Go back to Home</a>
+        ` });
     } catch (e) {
         return next(e);
     }
 });
 
-// Mode: - - >
-app.get('/mode', function (req, res, next) {
-    if (!req.query.nums) {
-        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
-    }
-    let numsAsStrings = req.query.nums.split(',');
-    // check if anything bad was put in
-    let nums = convertAndValidateNumsArray(numsAsStrings);
-    if (nums instanceof Error) {
-        throw new ExpressError(nums.message);
-    }
-
-    let result = {
-        operation: "mode",
-        result: findMode(nums)
-    }
-
-    return res.send(result);
-
-
-});
-
-// Route to serve mode.html
 app.get('/mode', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'mode.html'));
+    res.render('layout', { title: 'Calculate Mode', body: `
+        <h1>Calculate Mode</h1>
+        <form action="/mode/post" method="POST">
+            <label for="mode">Enter numbers (comma-separated):</label>
+            <input type="text" id="mode" name="mode" placeholder="e.g. 1,2,3,4">
+            <button type="submit">Calculate</button>
+        </form>
+    ` });
 });
 
-// Route to handle mode calculation
 app.post('/mode/post', (req, res, next) => {
     try {
         let numsAsStrings = req.body.mode.split(',');
@@ -148,10 +120,72 @@ app.post('/mode/post', (req, res, next) => {
             result: findMode(nums)
         };
 
-        return res.send(result);
+        return res.render('layout', { title: 'Calculation Result', body: `
+            <h1>Calculation Result</h1>
+            <p>Operation: ${result.operation}</p>
+            <p>Result: ${result.result}</p>
+            <a href="/">Go back to Home</a>
+        ` });
     } catch (e) {
         return next(e);
     }
+});
+
+// GET route for calculating mean with query parameters
+app.get('/mean', function (req, res, next) {
+    if (!req.query.nums) {
+        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+    }
+    let numsAsStrings = req.query.nums.split(',');
+    let nums = convertAndValidateNumsArray(numsAsStrings);
+    if (nums instanceof Error) {
+        throw new ExpressError(nums.message);
+    }
+
+    let result = {
+        operation: "mean",
+        result: findMean(nums)
+    };
+
+    return res.send(result);
+});
+
+// GET route for calculating median with query parameters
+app.get('/median', function (req, res, next) {
+    if (!req.query.nums) {
+        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+    }
+    let numsAsStrings = req.query.nums.split(',');
+    let nums = convertAndValidateNumsArray(numsAsStrings);
+    if (nums instanceof Error) {
+        throw new ExpressError(nums.message);
+    }
+
+    let result = {
+        operation: "median",
+        result: findMedian(nums)
+    };
+
+    return res.send(result);
+});
+
+// GET route for calculating mode with query parameters
+app.get('/mode', function (req, res, next) {
+    if (!req.query.nums) {
+        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+    }
+    let numsAsStrings = req.query.nums.split(',');
+    let nums = convertAndValidateNumsArray(numsAsStrings);
+    if (nums instanceof Error) {
+        throw new ExpressError(nums.message);
+    }
+
+    let result = {
+        operation: "mode",
+        result: findMode(nums)
+    };
+
+    return res.send(result);
 });
 
 // 404 error handler

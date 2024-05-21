@@ -1,0 +1,8 @@
+<%- include('layout', { title: 'Calculate Median' }) %>
+
+<h1>Calculate Median</h1>
+<form action="/median/post" method="POST">
+    <label for="median">Enter numbers (comma-separated):</label>
+    <input type="text" id="median" name="median" placeholder="e.g. 1,2,3,4">
+    <button type="submit">Calculate</button>
+</form>
