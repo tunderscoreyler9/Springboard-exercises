@@ -1,6 +1,6 @@
-<%- include('layout', { title: 'Calculation Result' }) %>
-
-<h1>Calculation Result</h1>
-<p>Operation: <%= operation %></p>
-<p>Result: <%= result %></p>
-<a href="/">Go back to Home</a>
+<h1>Calculate Mode</h1>
+<form action="/mode/post" method="POST">
+  <label for="mode">Enter numbers (comma-separated):</label>
+  <input type="text" id="mode" name="mode" placeholder="e.g. 1,2,3,4">
+  <button type="submit">Calculate</button>
+</form>
