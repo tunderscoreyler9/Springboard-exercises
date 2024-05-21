@@ -5,22 +5,17 @@ const ExpressError = require('./expressError');
 const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helpers');
 
 app.use(express.urlencoded({ extended: true })); // For Form Data
-
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Root route
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Home' }); // Render index.ejs
+  res.render('index', { title: 'Home' });
 });
 
-// Calculate Mean route (GET for form, POST for calculation)
 app.get('/mean', (req, res) => {
-  res.render('mean', { title: 'Calculate Mean' }); // Render mean.ejs
+  res.render('mean', { title: 'Calculate Mean' }); 
 });
 
 app.post('/mean/post', (req, res, next) => {
@@ -36,15 +31,15 @@ app.post('/mean/post', (req, res, next) => {
       result: findMean(nums)
     };
 
-    return res.render('result', { title: 'Calculation Result', result }); // Render result.ejs with data
+    return res.render('result', { title: 'Calculation Result', result });
   } catch (e) {
     return next(e);
   }
 });
 
-// Calculate Median routes
+
 app.get('/median', (req, res) => {
-  res.render('median', { title: 'Calculate Median' }); // Render median.ejs
+  res.render('median', { title: 'Calculate Median' });
 });
 
 app.post('/median/post', (req, res, next) => {
@@ -60,15 +55,15 @@ app.post('/median/post', (req, res, next) => {
       result: findMedian(nums)
     };
 
-    return res.render('result', { title: 'Calculation Result', result }); // Render result.ejs with data
+    return res.render('result', { title: 'Calculation Result', result });
   } catch (e) {
     return next(e);
   }
 });
 
-// Calculate Mode routes
+
 app.get('/mode', (req, res) => {
-  res.render('mode', { title: 'Calculate Mode' }); // Render mode.ejs
+  res.render('mode', { title: 'Calculate Mode' });
 });
 
 app.post('/mode/post', (req, res, next) => {
@@ -84,11 +79,72 @@ app.post('/mode/post', (req, res, next) => {
       result: findMode(nums)
     };
 
-    return res.render('result', { title: 'Calculation Result', result }); // Render result.ejs with data
+    return res.render('result', { title: 'Calculation Result', result });
   } catch (e) {
     return next(e);
   }
 });
+
+// #####################################
+// Routes for GET query parameter routes:
+
+// GET route for calculating mean with query parameters
+app.get('/mean', function (req, res, next) {
+  if (!req.query.nums) {
+    throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+  }
+  let numsAsStrings = req.query.nums.split(',');
+  let nums = convertAndValidateNumsArray(numsAsStrings);
+  if (nums instanceof Error) {
+    throw new ExpressError(nums.message);
+  }
+
+  let result = {
+    operation: "mean",
+    result: findMean(nums)
+  };
+
+  return res.send(result);
+});
+
+// GET route for calculating median with query parameters
+app.get('/median', function (req, res, next) {
+  if (!req.query.nums) {
+    throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+  }
+  let numsAsStrings = req.query.nums.split(',');
+  let nums = convertAndValidateNumsArray(numsAsStrings);
+  if (nums instanceof Error) {
+    throw new ExpressError(nums.message);
+  }
+
+  let result = {
+    operation: "median",
+    result: findMedian(nums)
+  };
+
+  return res.send(result);
+});
+
+// GET route for calculating mode with query parameters
+app.get('/mode', function (req, res, next) {
+  if (!req.query.nums) {
+    throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400);
+  }
+  let numsAsStrings = req.query.nums.split(',');
+  let nums = convertAndValidateNumsArray(numsAsStrings);
+  if (nums instanceof Error) {
+    throw new ExpressError(nums.message);
+  }
+
+  let result = {
+    operation: "mode",
+    result: findMode(nums)
+  };
+
+  return res.send(result);
+});
+
 
 // 404 error handler
 app.use(function (req, res, next) {
