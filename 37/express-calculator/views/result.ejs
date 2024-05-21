@@ -1,4 +1,17 @@
 <h1>Calculation Result</h1>
-<p>Operation: <%= result.operation %></p>
-<p>Result: <%= result.result %></p>
-<a href="/">Go back to Home</a>
+<p>Operation: <%= result.operation %>
+</p>
+
+<% if (result.operation==='all' ) { %>
+    <p>Mean: <%= result.mean %>
+    </p>
+    <p>Median: <%= result.median %>
+    </p>
+    <p>Mode: <%= result.mode %>
+    </p>
+    <% } else { %>
+        <p>Result: <%= result.result %>
+        </p>
+        <% } %>
+
+            <a href="/">Go back to Home</a>

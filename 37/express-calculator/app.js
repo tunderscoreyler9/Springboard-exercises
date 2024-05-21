@@ -174,7 +174,7 @@ app.post('/all', (req, res, next) => {
       mode: findMode(modeNums)
     };
 
-    return res.send(result);
+    return res.render('result', {title: 'Calculation Result', result});
 
   } catch (e) {
     return next(e);
