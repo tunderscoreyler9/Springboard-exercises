@@ -145,6 +145,41 @@ app.get('/mode', function (req, res, next) {
   return res.send(result);
 });
 
+// #######################################
+// ~further study '/all' route:
+app.get('/all', (req, res) => {
+  res.render('all', {title: 'Calculate all'})
+});
+
+app.post('/all', (req, res, next) => {
+  try {
+    let meanNumsAsStrings = req.body.mean.split(',');
+    let medianNumsAsStrings = req.body.median.split(',');
+    let modeNumsAsStrings = req.body.mode.split(',');
+
+    let meanNums = convertAndValidateNumsArray(meanNumsAsStrings);
+    let medianNums = convertAndValidateNumsArray(medianNumsAsStrings);
+    let modeNums = convertAndValidateNumsArray(modeNumsAsStrings);
+
+    for(let x of [meanNums, medianNums, modeNums]) {
+      if(x instanceof Error) {
+        throw new ExpressError(x.message);
+      }
+    }
+
+    let result = {
+      operation: "all",
+      mean: findMean(meanNums),
+      median: findMedian(medianNums),
+      mode: findMode(modeNums)
+    };
+
+    return res.send(result);
+
+  } catch (e) {
+    return next(e);
+  }
+});
 
 // 404 error handler
 app.use(function (req, res, next) {
