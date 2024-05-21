@@ -1,6 +1,12 @@
 <h1>Calculate Median</h1>
-<form action="/median/post" method="POST">
-  <label for="median">Enter numbers (comma-separated):</label>
-  <input type="text" id="median" name="median" placeholder="e.g. 1,2,3,4">
-  <button type="submit">Calculate</button>
+<form action="/median/post" method="POST"
+  style="display: flex; flex-direction: column; max-width: 300px; margin: auto;">
+  <div style="margin-bottom: 10px;">
+    <label for="median" style="display: block; margin-bottom: 5px;">Enter numbers (comma-separated):</label>
+    <input type="text" id="median" name="median" placeholder="e.g. 1,2,3,4" style="width: 100%; padding: 5px;">
+  </div>
+  <button type="submit" style="padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+    Calculate
+  </button>
 </form>
+<a href="/" style="display: block; text-align: center; margin-top: 20px;">Go back to Home</a>
