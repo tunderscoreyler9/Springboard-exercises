@@ -44,10 +44,11 @@
 </head>
 
 <body>
-    <form action="http://localhost:3000/mode/post" method="POST">
-        <label for="mode">Mode:</label>
-        <input type="text" id="mode" name="mode" placeholder="Enter mode data">
-        <button type="submit">Submit</button>
+    <h1>Calculate Mode</h1>
+    <form action="/mode/post" method="POST">
+        <label for="mode">Enter numbers (comma-separated):</label>
+        <input type="text" id="mode" name="mode" placeholder="e.g. 1,2,3,4">
+        <button type="submit">Calculate</button>
     </form>
 </body>
 

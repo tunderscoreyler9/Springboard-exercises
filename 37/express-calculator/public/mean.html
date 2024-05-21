@@ -44,10 +44,11 @@
 </head>
 
 <body>
-    <form action="http://localhost:3000/mean/post" method="POST">
-        <label for="mean">Mean:</label>
-        <input type="text" id="mean" name="mean" placeholder="Enter mean data">
-        <button type="submit">Submit</button>
+    <h1>Calculate Mean</h1>
+    <form action="/mean/post" method="POST">
+        <label for="mean">Enter numbers (comma-separated):</label>
+        <input type="text" id="mean" name="mean" placeholder="e.g. 1,2,3,4">
+        <button type="submit">Calculate</button>
     </form>
 </body>
 
